@@ -1,4 +1,4 @@
-# KSP Smart Tool Pack (KSP-STP)
+# Smart Tool Pack (STP)
 
 **"Transparency is the best Security."**
 
@@ -42,7 +42,28 @@ Delimiter=_
 [詳細設定]
 ; バックアップの世代管理 (0=無制限)
 MaxHistory=10
+```
+## 🛡️ セキュリティ哲学 (Philosophy)
 
+このリポジトリは、サプライチェーン攻撃やブラックボックス化する現代のソフトウェアへのアンチテーゼとして公開されています。
+
+- **White Box Policy:** すべてのロジックは `.bat` ファイル内に平文で記述されています。 `Get-Date` 等の処理には PowerShell を呼び出していますが、難読化は一切行っていません。
+    
+- **Audit First:** 利用者は、実行前に必ずコードを閲覧（Audit）してください。 「意図しない通信を行っていないか」「不正な削除コマンドがないか」を、自身の目で検品できます。
+    
+
+## 🚀 使い方 (Usage)
+
+1.  このリポジトリをClone、またはDownloadしてください。
+    
+2.  `setting.ini` を環境に合わせて調整してください。
+    
+3.  対象のファイルを `.bat` ファイルにドラッグ＆ドロップしてください。
+    
+
+## ⚠️ 免責 (Disclaimer)
+
+本ツールの使用によって生じた、いかなる損害（データの消失、業務の遅延、家庭内の不和など）についても、作者は一切の責任を負いません。 **「コードを読み、納得した上で使う」** というオープンソースの原則に従ってください。
 ---
 
 # Smart Tool Pack
@@ -79,3 +100,5 @@ go build -ldflags -H=windowsgui -o ../作業バックアップ_go.exe ./backup
 - **Delimiter**: Separator char (e.g. `_`).
 - **Position**: `Prefix` or `Suffix`.
 - **MaxHistory**: Number of backups to keep (0 = unlimited).
+
+Author: totototo0526 License: MIT
