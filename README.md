@@ -2,12 +2,21 @@
 
 **"Transparency is the best Security."**
 
+## ⚠️ Disclaimer (免責事項 - 必ずお読みください)
+This project is a **personal hobby project** by the author.
+It is **NOT** an official product of any company or organization the author belongs to.
+
+本ツールは、作者個人の研究・趣味として作成されたものです。
+**作者の所属する企業・組織とは一切関係ありません。**
+本ツールの利用によって生じたいかなる損害についても、作者および所属組織は責任を負いません。
+「コードを読み、自己責任で使う」ことに同意できる方のみご利用ください。
+
 ## 📌 概要 (Overview)
 現場の「めんどくさい」を解消するための、Windows用業務効率化ツールセットです。
-あえてモダンなGUIアプリではなく、**枯れた技術（Batchfile）**をベースに構築しています。
+本リポジトリでは、配布パッケージに含まれる**2つのバージョン**のソースコードを管理しています。
 
-なぜか？
-それは、**「中身が見える（監査可能である）こと」こそが、業務ツールにおける最強のセキュリティ機能だから**です。
+1.  **Script Version (.bat):** 中身が即座に確認できる「ホワイトボックス」版
+2.  **App Version (.exe):** Go言語で記述・ビルドされた「高速実行」版
 
 ## 📦 収録ツール (Tools)
 
@@ -24,11 +33,30 @@
 
 * **Logic:** `FileName.ext` -> `FileName_20251218.ext` (Suffix/Prefix切替可)
 
-## ⚙️ 設定 (Configuration)
-`setting.ini` を編集することで、すべての挙動を制御できます。
-コンパイル不要で、現場の運用に合わせて即座にポリシー変更が可能です。
+## 🛠️ Go製アプリについて (About .exe)
+配布パッケージに含まれる `.exe` ファイルは、本リポジトリの `go_src` ディレクトリ内にあるソースコードからビルドされています。
+「.exeの中身も確認したい」「自分でビルドしたい」という方は、以下のソースを参照してください。
 
-```ini
+* **Source Location:**
+    * Backup Tool: `./go_src/backup/`
+    * AddDate Tool: `./go_src/date_append/`
+    * Common Logic: `./go_src/common/`
+
+* **Build Command (Example):**
+```powershell
+  cd go_src/backup
+  go build -o ../../bin/BackupTool.exe main.go
+```
+
+## ⚙️ 設定 (Configuration)
+
+`setting.ini` を編集することで、すべての挙動を制御できます。 (.bat版、.exe版 共通の設定ファイルです)
+
+Ini, TOML
+
+## 🛡️ セキュリティ
+
+```
 [基本設定]
 ; 日付をつける位置 (Prefix=頭 / Suffix=お尻)
 Position=Suffix
@@ -43,11 +71,12 @@ Delimiter=_
 ; バックアップの世代管理 (0=無制限)
 MaxHistory=10
 ```
-## 🛡️ セキュリティ哲学 (Philosophy)
+
+## 哲学 (Philosophy)
 
 このリポジトリは、サプライチェーン攻撃やブラックボックス化する現代のソフトウェアへのアンチテーゼとして公開されています。
 
-- **White Box Policy:** すべてのロジックは `.bat` ファイル内に平文で記述されています。 `Get-Date` 等の処理には PowerShell を呼び出していますが、難読化は一切行っていません。
+- **White Box Policy:** Script版のロジックはすべて平文で記述されています。 App版(.exe)も、このリポジトリのGoソースコードと100%一致することを保証します。
     
 - **Audit First:** 利用者は、実行前に必ずコードを閲覧（Audit）してください。 「意図しない通信を行っていないか」「不正な削除コマンドがないか」を、自身の目で検品できます。
     
@@ -58,47 +87,9 @@ MaxHistory=10
     
 2.  `setting.ini` を環境に合わせて調整してください。
     
-3.  対象のファイルを `.bat` ファイルにドラッグ＆ドロップしてください。
+3.  対象のファイルを `.bat` または `.exe` にドラッグ＆ドロップしてください。
     
 
-## ⚠️ 免責 (Disclaimer)
+* * *
 
-本ツールの使用によって生じた、いかなる損害（データの消失、業務の遅延、家庭内の不和など）についても、作者は一切の責任を負いません。 **「コードを読み、納得した上で使う」** というオープンソースの原則に従ってください。
----
-
-# Smart Tool Pack
-
-This repository contains a set of useful Windows tools written in Go.
-
-## Included Tools
-
-### 1. Date Append Tool
-Adds a timestamp to the filename of dropped files.
-- **Usage**: Drag and drop files onto `日付付与_go.exe`.
-- **Settings**: Configurable via `setting.ini` (shared).
-
-### 2. Backup Tool
-Creates a backup of the file in a `_History` subdirectory with a timestamp.
-- **Usage**: Drag and drop files onto `作業バックアップ_go.exe`.
-- **Features**: Auto-cleans old backups based on `setting.ini`.
-
-## Build Instructions
-
-1. Install [Go](https://go.dev/dl/).
-2. Open a terminal in `go_src` directory.
-3. Run the build commands:
-
-```bash
-# Windows GUI build (no console window)
-go build -ldflags -H=windowsgui -o ../日付付与_go.exe ./date_append
-go build -ldflags -H=windowsgui -o ../作業バックアップ_go.exe ./backup
-```
-
-## Configuration (setting.ini)
-
-- **DateFormat**: Timestamp format (e.g. `yyyyMMdd`).
-- **Delimiter**: Separator char (e.g. `_`).
-- **Position**: `Prefix` or `Suffix`.
-- **MaxHistory**: Number of backups to keep (0 = unlimited).
-
-Author: totototo0526 License: MIT
+Author: \[Totototo0526\] License: MIT
